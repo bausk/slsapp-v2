@@ -1,0 +1,46 @@
+service: ternovka-frontend
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${self:custom.secrets.NODE_ENV}
+  region: us-east-1
+  environment: ${file(secrets.json)}
+
+functions:
+  server:
+    handler: index.server
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+
+plugins:
+  - serverless-apigw-binary
+  - serverless-domain-manager
+  - serverless-offline
+
+package:
+  exclude:
+    - .venv/**
+    - .idea/**
+    - .git/**
+    - .ebextensions/**
+    - .elasticbeanstalk/**
+    - .vscode/**
+    - node_modules/**
+    - .secrets/**
+    - secrets.json
+    - /*.key
+    - /*.pem
+    - /*.cer
+
+custom:
+  secrets: ${file(secrets.json)}
+  apigwBinary:
+    types:
+      - '*/*'
+  # customDomain:
+  #   domainName: ${self:custom.secrets.DOMAIN}
+  #   basePath: ''
+  #   stage: ${self:custom.secrets.NODE_ENV}
+  #   createRoute53Record: false

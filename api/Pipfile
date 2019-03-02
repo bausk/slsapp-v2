@@ -1,0 +1,33 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+awsebcli = "*"
+pylint = "*"
+bandit = "*"
+flake8 = "*"
+mypy = "*"
+autopep8 = "*"
+awscli = "*"
+rope = "*"
+
+[packages]
+flask = "*"
+pandas = "*"
+numpy = "*"
+flask-caching = "*"
+python-dateutil = "<2.7.0"
+gspread = "*"
+python-dotenv = "*"
+python-jose-cryptodome = "*"
+flask-cors = "*"
+auth0-python = "*"
+authlib = "*"
+
+[requires]
+python_version = "3.6"
+
+[scripts]
+predeploy = "python ../scripts/predeploy.py"

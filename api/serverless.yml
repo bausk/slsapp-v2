@@ -1,0 +1,46 @@
+# serverless.yml
+
+service: ternovka-api-microservice
+
+plugins:
+  - serverless-python-requirements
+  - serverless-wsgi
+  - serverless-offline
+
+custom:
+  wsgi:
+    app: api.app
+    packRequirements: false
+  pythonRequirements:
+    slim: true
+    dockerizePip: non-linux
+    pythonBin: python
+  secrets: ${file(secrets.json)}
+
+
+package:
+  exclude:
+  - .venv/**
+  - .idea/**
+  - .git/**
+  - .ebextensions/**
+  - .elasticbeanstalk/**
+  - .vscode/**
+  - .secrets/**
+  - secrets.json
+  - node_modules/**
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: us-east-1
+  environment: ${file(secrets.json)}
+
+functions:
+  app:
+    handler: wsgi_handler.handler
+    events:
+      - http: ANY api
+      - http: 'ANY api/{proxy+}'
+
