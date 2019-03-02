@@ -9,11 +9,13 @@ from flask_cors import cross_origin
 from flask_cors import CORS
 from jose import jwt
 from auth0.v3.authentication import Users
-from authlib.flask.client import OAuth
 
 
 if __name__ == '__main__':
-    for key, val in json.load(open('secrets.dev.json')).items():
+    script_dir = os.path.dirname(__file__)
+    rel_path = 'secrets.dev.json'
+    abs_file_path = os.path.join(script_dir, rel_path)
+    for key, val in json.load(open(abs_file_path)).items():
         os.environ[key] = val
 
 
@@ -69,14 +71,16 @@ def get_token_auth_header():
     return token
 
 
+jsonurl = urlopen("https://"+AUTH0_DOMAIN+"/.well-known/jwks.json")
+jwks = json.loads(jsonurl.read())
+
+
 def requires_auth(f):
     """Determines if the Access Token is valid
     """
     @wraps(f)
     def decorated(*args, **kwargs):
         token = get_token_auth_header()
-        jsonurl = urlopen("https://"+AUTH0_DOMAIN+"/.well-known/jwks.json")
-        jwks = json.loads(jsonurl.read())
         unverified_header = jwt.get_unverified_header(token)
         rsa_key = {}
         for key in jwks["keys"]:
@@ -113,9 +117,8 @@ def requires_auth(f):
                                     " token."}, 401)
 
             _request_ctx_stack.top.current_user = payload
-            users = Users(AUTH0_DOMAIN)
-            user = users.userinfo(token)
-            print(user)
+            # users = Users(AUTH0_DOMAIN)
+            # user = users.userinfo(token)
             return f(*args, **kwargs)
         raise AuthError({"code": "invalid_header",
                         "description": "Unable to find appropriate key"}, 401)
