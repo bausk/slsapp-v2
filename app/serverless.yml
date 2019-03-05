@@ -16,7 +16,7 @@ functions:
 
 plugins:
   - serverless-apigw-binary
-  - serverless-domain-manager
+  # - serverless-domain-manager
   - serverless-offline
 
 package:
@@ -27,9 +27,9 @@ package:
     - .ebextensions/**
     - .elasticbeanstalk/**
     - .vscode/**
-    - node_modules/**
     - .secrets/**
     - secrets.json
+    - secrets.dev.json
     - /*.key
     - /*.pem
     - /*.cer

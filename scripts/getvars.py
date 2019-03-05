@@ -6,13 +6,16 @@ import glob
 import re
 
 
+rootpath = os.path.join(os.path.dirname(__file__), os.pardir)
+
+
 def get_variables(*envs):
     special_vars = {
     }
     common_vars = {}
     for env in envs:
-        env_config_files = glob.glob('.secrets/[!_]*.{}.json'.format(env))
-        env_common_files = glob.glob('.secrets/_*.{}.json'.format(env))
+        env_config_files = glob.glob('{}/.secrets/[!_]*.{}.json'.format(rootpath, env))
+        env_common_files = glob.glob('{}/.secrets/_*.{}.json'.format(rootpath, env))
         for config_file_name in env_config_files:
             try:
                 service = re.search(

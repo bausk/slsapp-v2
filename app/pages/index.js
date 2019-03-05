@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header.js';
-import Head from 'next/head';
 import Datasheet from '../components/Datasheet/Datasheet';
 import Plot from '../components/Plot/Plot';
 import Login from '../components/Login/Login';
-import Auth from '../utils/auth';
+import getAuth from '../utils/auth';
+
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -42,8 +42,7 @@ class App extends Component {
 
   
   componentDidMount() {
-    debugger;
-    this.auth = new Auth();
+    this.auth = getAuth();
     this.setState({
       ready: true
     });
@@ -61,9 +60,6 @@ class App extends Component {
     }
     return (
       <div>
-        {/* <Head>
-          <script src="https://cdn.auth0.com/js/auth0/9.5.1/auth0.min.js"></script>
-        </Head> */}
         <AppWrapper>
           <Header
             tabs={this.state.tabs}
@@ -71,8 +67,8 @@ class App extends Component {
             onSelect={this.onSelect}
           />
           <Body>
-            {(this.state.selectedTab === 0) && <Datasheet auth={this.auth} />}
-            {(this.state.selectedTab === 1) && <Plot auth={this.auth} />}
+            {(this.state.selectedTab === 0) && <Datasheet />}
+            {(this.state.selectedTab === 1) && <Plot />}
             {(this.state.selectedTab === null) && <Login auth={this.auth} />}
           </Body>
         </AppWrapper>

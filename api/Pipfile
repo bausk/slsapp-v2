@@ -5,13 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 awsebcli = "*"
-pylint = "*"
-bandit = "*"
-flake8 = "*"
 mypy = "*"
-autopep8 = "*"
 awscli = "*"
 rope = "*"
+prospector = "*"
 
 [packages]
 flask = "*"
@@ -20,11 +17,11 @@ numpy = "*"
 flask-caching = "*"
 python-dateutil = "<2.7.0"
 gspread = "*"
-python-dotenv = "*"
 python-jose-cryptodome = "*"
 flask-cors = "*"
 auth0-python = "*"
-authlib = "*"
+cffi = "*"
+oauth2client = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,3 +1,4 @@
+const withCSS = require('@zeit/next-css');
 
 if (process.env.NODE_ENV === 'development') {
   const serverVariables = require('./secrets.dev.json');
@@ -7,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-module.exports = {
+module.exports = withCSS({
   publicRuntimeConfig: {
     AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
     API_AUDIENCE: process.env.API_AUDIENCE,
@@ -17,4 +18,4 @@ module.exports = {
   },
   serverRuntimeConfig: {
   }
-};
+});

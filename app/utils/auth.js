@@ -2,9 +2,8 @@ import { AUTH_CONFIG } from './auth0-variables';
 import createHistory from 'history/createBrowserHistory'
 import Auth0Lock from 'auth0-lock';
 
-export default class Auth {
+class Auth {
   constructor() {
-    debugger;
     this.lock = new Auth0Lock(AUTH_CONFIG.clientId, AUTH_CONFIG.domain, {
       autoclose: true,
       allowSignUp: false,
@@ -25,7 +24,6 @@ export default class Auth {
     this.history = createHistory({
       forceRefresh: true
     });
-
   }
 
   login() {
@@ -76,3 +74,12 @@ export default class Auth {
     return new Date().getTime() < expiresAt;
   }
 }
+
+let auth;
+
+export default () => {
+  if (!auth) {
+    auth = new Auth();
+  }
+  return auth;
+};

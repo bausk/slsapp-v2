@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios';
-import getConfig from 'next/config';
+import { connect } from 'react-redux';
+import FetchDataContainer from '../FetchData/FetchDataContainer';
+import Table from '../Table/Table';
 
 
 class Datasheet extends React.Component {
@@ -8,34 +9,23 @@ class Datasheet extends React.Component {
     message: 'None received'
   }
 
-  componentDidMount() {
-    this.request();
-  }
-
-  request = () => {
-    const { publicRuntimeConfig } = getConfig();
-    const { getAccessToken } = this.props.auth;
-    const API_URL = publicRuntimeConfig.API_URL;
-    const headers = { 'Authorization': `Bearer ${getAccessToken()}`}
-    axios.get(`${API_URL}/private`, { headers })
-      .then((response) => 
-        {
-          this.setState({ message: response.data })
-        })
-      .catch((error) => {
-        this.setState({ message: error.message })
-    });
-  }
-
   render() {
     return (
       <div>
-        Here be Datasheet.
+        <FetchDataContainer />
+        <h3>Ternovka -- Data Chart</h3>
         <br />
-        Message: {this.state.message}
+        <Table data={this.props.data} header={this.props.header} />
       </div>
     );
   }
 }
 
-export default Datasheet;
+const mapStateToProps = (state) => {
+  return {
+    data: state.table.normalizedData,
+    header: state.table.header
+  };
+};
+
+export default connect(mapStateToProps)(Datasheet);
