@@ -21,12 +21,6 @@ app = Flask(__name__)
 CORS(app)
 add_error_handler(app)
 
-
-@app.route("/api")
-def hello2():
-    return "Hello World API!"
-
-
 @app.route("/api/public")
 @requires_auth
 def hello3():
