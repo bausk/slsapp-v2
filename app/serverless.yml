@@ -16,7 +16,6 @@ functions:
 
 plugins:
   - serverless-apigw-binary
-  # - serverless-domain-manager
   - serverless-offline
 
 package:
@@ -24,6 +23,8 @@ package:
     - .venv/**
     - .idea/**
     - .git/**
+    - node_modules/**/.cache/**
+    - '**.test.js'
     - .ebextensions/**
     - .elasticbeanstalk/**
     - .vscode/**

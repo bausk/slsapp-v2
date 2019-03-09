@@ -10,5 +10,5 @@ for var in "$@"
 do
     echo "Deploying $var"
     cd "${__pardir}/$var"
-    sls deploy
+    npm run deploy
 done

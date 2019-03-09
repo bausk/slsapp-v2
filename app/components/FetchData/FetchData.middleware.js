@@ -1,8 +1,8 @@
 import axios from 'axios';
-import getConfig from 'next/config';
 import { FETCH, SAVE_DATA } from './FetchData.actions';
 import getAuth from '../../utils/auth';
 
+const API_URL = process.env.API_URL;
 
 export default store => next => (action) => {
     const { type } = action;
@@ -13,9 +13,9 @@ export default store => next => (action) => {
             if (retrievedAt !== null) {
                 return next(action);
             }
-            const { publicRuntimeConfig } = getConfig();
+            
             const { getAccessToken } = getAuth();
-            const API_URL = publicRuntimeConfig.API_URL;
+            
             const headers = { 'Authorization': `Bearer ${getAccessToken()}` }
             axios.get(`${API_URL}/private`, { headers })
                 .then((response) => {
