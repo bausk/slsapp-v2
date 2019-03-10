@@ -4,12 +4,24 @@ import { FETCH } from './FetchData.actions';
 
 
 class FetchDataContainer extends React.Component {
+  state = {
+    isStale: true
+  };
+
   componentDidMount() {
+    this.request();
+  }
+  componentDidUpdate() {
     this.request();
   }
 
   request = () => {
-    return this.props.getTable();
+    if (this.props.isAuthenticated && this.state.isStale) {
+      this.props.getTable();
+      this.setState({
+        isStale: false
+      });
+    }
   }
 
   render() {

@@ -1,22 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import FetchDataContainer from '../FetchData/FetchDataContainer';
+import Grid from '@material-ui/core/Grid';
+import Typography from "@material-ui/core/Typography";
 import Table from '../Table/Table';
 
 
 class Datasheet extends React.Component {
-  state = {
-    message: 'None received'
-  }
-
   render() {
     return (
-      <div>
-        <FetchDataContainer />
-        <h3>Ternovka -- Data Chart</h3>
-        <br />
-        <Table data={this.props.data} header={this.props.header} />
-      </div>
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="stretch"
+        spacing={16}
+      >
+        <Grid item>
+          <Typography variant="h5" component="h3">Ternovka -- Data Chart</Typography>
+        </Grid>
+        <Grid item>
+          <Table data={this.props.data} header={this.props.header} />
+        </Grid>
+      </Grid>
     );
   }
 }

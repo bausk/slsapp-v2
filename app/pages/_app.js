@@ -2,6 +2,8 @@ import App, { Container } from 'next/app'
 import React from 'react'
 import Head from "next/head";
 import { Provider } from 'react-redux'
+import MomentUtils from '@date-io/moment';
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import withReduxStore from '../lib/with-redux-store'
 
 
@@ -21,12 +23,14 @@ class MyApp extends App {
   render () {
     const { Component, pageProps, reduxStore } = this.props
     return (
-      <Container>
-        {this.renderHead()}
-        <Provider store={reduxStore}>
-          <Component {...pageProps} />
-        </Provider>
-      </Container>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <Container>
+          {this.renderHead()}
+          <Provider store={reduxStore}>
+            <Component {...pageProps} />
+          </Provider>
+        </Container>
+      </MuiPickersUtilsProvider>
     )
   }
 }

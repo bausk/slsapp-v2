@@ -1,12 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import dynamic from 'next/dynamic';
 const Plot = dynamic(
   import('react-plotly.js'),
   { ssr: false }
 )
-import styled from 'styled-components';
-import FetchData from '../FetchData/FetchDataContainer';
+import Grid from '@material-ui/core/Grid';
+import Regimes from '../Regimes/Regimes';
 import { initialLayout, trace } from '../../settings/mainplot';
 
 
@@ -14,10 +13,10 @@ class PlotContainer extends React.Component {
   state = {
     currentDate: null,
     currentSlice: {
-      'x': [1, 2, 3, 4],
-      'y': [5, 3, 5, 6],
-      'z': [2, 2, 3, 3],
-      'intensity': [2, 2, 3, 3]
+      'x': [],
+      'y': [],
+      'z': [],
+      'intensity': []
     }
   };
   get data() {
@@ -30,6 +29,17 @@ class PlotContainer extends React.Component {
   get layout() {
     return initialLayout;
   }
+
+  onUpdate = (data) => {
+    this.setState({
+      currentSlice: {
+        x: data[0],
+        y: data[1],
+        z: data[2],
+        intensity: data[3],
+      }
+    });
+  };
 
   onClick = () => {
     this.setState({
@@ -44,22 +54,26 @@ class PlotContainer extends React.Component {
   render() {
     return (
       <div>
-        <FetchData />
-        <Plot
-          data={this.data}
-          layout={this.layout}
-        />
-        <button onClick={this.onClick}>Change data</button>
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="stretch"
+          spacing={8}
+        >
+          <Grid item>
+            <Regimes onUpdate={this.onUpdate}/>
+          </Grid>
+          <Grid item>
+            <Plot
+              data={this.data}
+              layout={this.layout}
+            />
+          </Grid>
+        </Grid>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    data: state.table.data,
-    normalizedData: state.table.normalizedData
-  };
-}
-
-export default connect(mapStateToProps)(PlotContainer);
+export default PlotContainer;

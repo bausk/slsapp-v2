@@ -17,13 +17,19 @@ def get_data():
     return data
 
 
-def time_to_pd(row):
-    return pd.to_datetime(row['DateTime'], infer_datetime_format=True)
-
-
 def get_dataframe():
     data = get_data()
     headers = data.pop(0)
     df = pd.DataFrame(data, columns=headers)
-    df['DateTime'] = df.apply(time_to_pd, axis=1)
-    return normalize(df)
+    origin = df['DateTime']
+    df['DateTime'] = pd.to_datetime(origin, format='%d.%m.%Y %H:%M:%S', errors='coerce')
+    mask = df['DateTime'].isnull()
+    df.loc[mask, 'DateTime'] = pd.to_datetime(origin[mask], format='%d.%m.%Y %H:%M',
+        errors='coerce')
+    mask = df['DateTime'].isnull()
+    df.loc[mask, 'DateTime'] = pd.to_datetime(origin[mask], format='%Y-%m-%d %H:%M:%S',
+        errors='coerce')
+    mask = df['DateTime'].isnull()
+    df.loc[mask, 'DateTime'] = pd.to_datetime(origin[mask], format='%Y-%m-%d %H:%M',
+        errors='coerce')
+    return normalize(df.sort_values(by='DateTime',ascending=True))

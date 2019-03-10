@@ -1,14 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from "@material-ui/core/Typography";
 
-const Button = styled.button`
-padding: 10px 12px;
-font-size: 18px;
-margin: 12px;
-background-color: #7ac142;
-border: solid 2px #477126;
-color: #1c2d10;
-`;
 
 class Login extends React.Component {
 
@@ -27,18 +22,23 @@ class Login extends React.Component {
   render() {
     const isAuthenticated = this.props.auth && this.props.auth.isAuthenticated;
     return (
-      <div>
-        <div>Ternovka-2 Landing Page</div>
-        <div>{isAuthenticated() ? 
-          <Button onClick={this.logout}>
-            Log Out
-          </Button> : 
-          <Button onClick={this.login}>
-            Log In
-          </Button>
-        }
-        </div>
-      </div>
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="stretch"
+        spacing={16}
+      >
+        <Grid item>
+          <Typography variant="h5" component="h3">Ternovka-2 Landing Page</Typography>
+        </Grid>
+        <Grid item>
+          {isAuthenticated() ?
+            <Button variant="contained" color="secondary" onClick={this.logout}>Log Out</Button> :
+            <Button variant="contained" color="primary" onClick={this.login}>Log In</Button>
+          }
+        </Grid>
+      </Grid>
     );
   }
 }

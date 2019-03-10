@@ -4,6 +4,7 @@ import SwipeableViews from "react-swipeable-views";
 import styled from 'styled-components';
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import FetchData from '../components/FetchData/FetchDataContainer';
 import Header from '../components/Header/Header.js';
 import Datasheet from '../components/Datasheet/Datasheet';
 import Plot from '../components/Plot/Plot';
@@ -15,11 +16,6 @@ const Body = styled(SwipeableViews)`
   padding-top: 20px;
   padding-bottom: 20px;
   text-align: center;
-  font-size: 22px;
-  border-color: rgb(211, 211, 211);
-  border-style: solid;
-  border-width: 1px;
-  border-top-width: 0;
 `;
 
 const tabCollection = [
@@ -90,8 +86,6 @@ class App extends Component {
   renderContent = () => {
     const { theme } = this.props;
     return tabCollection.map((tab) => {
-      debugger;
-      console.log(tab.component);
       const C = tab.component;
       return <TabContainer
         dir={theme.direction}
@@ -116,6 +110,7 @@ class App extends Component {
           selected={this.state.selectedTab}
           onSelect={this.onSelect}
         />
+        <FetchData isAuthenticated={this.auth.isAuthenticated()} />
         <Body
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={this.state.selectedTab}
