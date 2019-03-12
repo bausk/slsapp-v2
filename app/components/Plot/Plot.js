@@ -61,7 +61,11 @@ class PlotContainer extends React.Component {
           alignItems="stretch"
           spacing={8}
         >
-          <Grid item>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+          >
             <Regimes onUpdate={this.onUpdate}/>
           </Grid>
           <Grid item>

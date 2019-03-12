@@ -38,8 +38,8 @@ export const initialLayout = {
         },
         'zaxis': {
             // 'rangemode': 'tozero',
-            'title': 'Z (m)',
-            'range': [-3, 3],
+            'title': 'Z (cm)',
+            'range': [-1.5, 1.5],
             'showbackground': true,
             'backgroundcolor': 'rgb(230, 230,230)',
             'gridcolor': 'rgb(255, 255, 255)',
