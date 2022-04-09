@@ -27,7 +27,7 @@
     "history": "^4.7.2",
     "immutability-helper": "^3.0.0",
     "material-ui-pickers": "^2.2.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "next": "^8.0.3",
     "plotly.js": "^1.45.1",
     "prop-types": "^15.7.2",
