@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.3",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "serverless-http": "^1.9.1"
   },
   "devDependencies": {
